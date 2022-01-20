@@ -39,6 +39,16 @@ public class KafkaConfig {
         return new DefaultKafkaConsumerFactory<>(consumerProps(), new StringDeserializer(), new JsonDeserializer<>(MyMessage.class, false));
     }
 
+    @Bean
+    public ProducerFactory<String, MyMessage> greetingProducerFactory() {
+        return new DefaultKafkaProducerFactory<>(senderProps(), new StringSerializer(), new JsonSerializer<>());
+    }
+
+    @Bean
+    public KafkaTemplate<String, MyMessage> greetingKafkaTemplate(ProducerFactory<String, MyMessage> greetingProducerFactory) {
+        return new KafkaTemplate<>(greetingProducerFactory);
+    }
+
     private Map<String, Object> consumerProps() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getConsumer().getBootstrapServers());
@@ -48,21 +58,12 @@ public class KafkaConfig {
         return props;
     }
 
-    @Bean
-    public ProducerFactory<String, MyMessage> greetingProducerFactory() {
-        return new DefaultKafkaProducerFactory<>(senderProps(), new StringSerializer(), new JsonSerializer<>());
-    }
-
     private Map<String, Object> senderProps() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getProducer().getBootstrapServers());
         return props;
     }
 
-    @Bean
-    public KafkaTemplate<String, MyMessage> greetingKafkaTemplate(ProducerFactory<String, MyMessage> greetingProducerFactory) {
-        return new KafkaTemplate<>(greetingProducerFactory);
-    }
 
 
 }

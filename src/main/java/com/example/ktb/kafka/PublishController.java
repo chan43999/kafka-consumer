@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Publish {
+public class PublishController {
 
     private final KafkaTemplate<String, MyMessage> sender;
 
-    public Publish(KafkaTemplate<String, MyMessage> sender) {
+    public PublishController(KafkaTemplate<String, MyMessage> sender) {
         this.sender = sender;
     }
 
