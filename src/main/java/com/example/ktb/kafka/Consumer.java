@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class Consumer {
 
     @KafkaListener(topics = "test", containerFactory = "kafkaListenerContainerFactory")
-    public void listen(@Payload MyMessage message, Acknowledgment acknowledgment){
+    public void listen(@Payload MyMessage message, Acknowledgment acknowledgment) {
         log.info(message.toString());
         acknowledgment.acknowledge();
     }

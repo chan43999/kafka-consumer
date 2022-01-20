@@ -36,7 +36,7 @@ public class KafkaConfig {
 
     @Bean
     public ConsumerFactory<String, MyMessage> kafkaConsumer() {
-        return new DefaultKafkaConsumerFactory<>(consumerProps(),new StringDeserializer(),new JsonDeserializer<>(MyMessage.class, false));
+        return new DefaultKafkaConsumerFactory<>(consumerProps(), new StringDeserializer(), new JsonDeserializer<>(MyMessage.class, false));
     }
 
     private Map<String, Object> consumerProps() {
