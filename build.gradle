@@ -16,9 +16,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.6.2'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-kubernetes-fabric8-config
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-fabric8-config', version: '2.1.0'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka
     implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.8.2'
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -30,9 +30,10 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
-    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-kubernetes
-// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-kubernetes-fabric8-config
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-fabric8-config', version: '2.1.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.6.3'
 
 
 }
