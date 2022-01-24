@@ -1,5 +1,6 @@
 package com.example.ktb.kafka;
 
+import com.example.ktb.kafka.message.Message;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -9,9 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
-import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.retrytopic.RetryTopicConfiguration;
-import org.springframework.kafka.retrytopic.RetryTopicConfigurationBuilder;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
@@ -28,26 +26,26 @@ public class KafkaConfig {
     }
 
     @Bean
-    ConcurrentKafkaListenerContainerFactory<String, MyMessage>
-    kafkaListenerContainerFactory(ConsumerFactory<String, MyMessage> consumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, MyMessage> factory =
+    ConcurrentKafkaListenerContainerFactory<String, Message>
+    kafkaListenerContainerFactory(ConsumerFactory<String, Message> consumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, Message> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         return factory;
     }
 
     @Bean
-    public ConsumerFactory<String, MyMessage> kafkaConsumer() {
-        return new DefaultKafkaConsumerFactory<>(consumerProps(), new StringDeserializer(), new JsonDeserializer<>(MyMessage.class, false));
+    public ConsumerFactory<String, Message> kafkaConsumer() {
+        return new DefaultKafkaConsumerFactory<>(consumerProps(), new StringDeserializer(), new JsonDeserializer<>(Message.class, false));
     }
 
     @Bean
-    public ProducerFactory<String, MyMessage> greetingProducerFactory() {
+    public ProducerFactory<String, Message> greetingProducerFactory() {
         return new DefaultKafkaProducerFactory<>(senderProps(), new StringSerializer(), new JsonSerializer<>());
     }
 
     @Bean
-    public KafkaTemplate<String, MyMessage> greetingKafkaTemplate(ProducerFactory<String, MyMessage> greetingProducerFactory) {
+    public KafkaTemplate<String, Message> greetingKafkaTemplate(ProducerFactory<String, Message> greetingProducerFactory) {
         return new KafkaTemplate<>(greetingProducerFactory);
     }
 

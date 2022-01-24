@@ -1,14 +1,15 @@
-package com.example.ktb.kafka;
+package com.example.ktb.kafka.message;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyMessage {
-
-    String name;
-    Integer age;
+@Builder
+public class Friend{
+    public int id;
+    public String name;
 }
