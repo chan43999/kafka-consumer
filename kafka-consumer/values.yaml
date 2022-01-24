@@ -34,7 +34,7 @@ configmap: |-
 
 
 
-replicaCount: 100
+replicaCount: 20
 
 image:
   repository: quay.io/linxianer12/kafka-consumer
