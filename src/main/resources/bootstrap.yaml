@@ -29,7 +29,7 @@ spring:
       topics: local
     producer:
       bootstrap-servers: prod-3-brokers-kafka-bootstrap-event-stream.itzroks-666000ldq2-6xuhwd-4b4a324f027aea19c5cbc0c3275c4656-0000.hkg02.containers.appdomain.cloud:443
-      topic: perf-test
+      topic: perftest
       acks: 1
       properties:
         security.protocol: SASL_SSL
