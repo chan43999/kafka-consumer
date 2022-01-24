@@ -17,7 +17,7 @@ public class Consumer {
     private long start = 0;
 
 
-    @KafkaListener(topics = "up5", containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(topics = "${spring.kafka.consumer.topics}", containerFactory = "kafkaListenerContainerFactory")
     public void listen(@Payload MyMessage message,@Header(KafkaHeaders.OFFSET) List<Long> offsets) throws InterruptedException {
         if (start == 0) {
             start = System.currentTimeMillis();
