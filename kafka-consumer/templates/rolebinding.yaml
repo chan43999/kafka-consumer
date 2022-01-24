@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "kafka-consumer.fullname" . }}
+  labels:
+  {{- include "kafka-consumer.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "kafka-consumer.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "kafka-consumer.serviceAccountName" . }}

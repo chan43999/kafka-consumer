@@ -1,16 +1,49 @@
 # Default values for kafka-consumer.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+configmap: |-
+  app:
+    delay: 100
+  spring:
+    jmx:
+      enabled: true
+    config:
+      activate:
+        on-profile: kubernetes
+    kafka:
+      consumer:
+        bootstrap-servers: prod-3-brokers-kafka-bootstrap.event-stream.svc:9092
+        topics: perf-test
+        properties:
+          security.protocol: SASL_PLAINTEXT
+          sasl.mechanism: SCRAM-SHA-512
+          sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
+      producer:
+        bootstrap-servers: prod-3-brokers-kafka-bootstrap.event-stream.svc:9092
+        topic: test
+  management:
+    endpoint:
+      health:
+        show-details: ALWAYS
+      restart:
+        enabled: true
+    endpoints:
+      web:
+        exposure:
+          include: 'health,info,prometheus,metrics,env'
 
-replicaCount: 1
+
+
+replicaCount: 100
 
 image:
   repository: quay.io/linxianer12/kafka-consumer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 0.0.1
+  tag: 0.0.7
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: quay
 nameOverride: ""
 fullnameOverride: ""
 
@@ -46,7 +79,7 @@ ingress:
   annotations:
     route.openshift.io/termination: "edge"
   hosts:
-    - host: chart-example.local
+    - host: kafka-consumer.itzroks-666000ldq2-6xuhwd-4b4a324f027aea19c5cbc0c3275c4656-0000.hkg02.containers.appdomain.cloud
       paths:
         - path: /
           pathType: ImplementationSpecific

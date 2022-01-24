@@ -1,6 +1,6 @@
 spring:
   application:
-    name: consumer-service
+    name: kafka-consumer
   main:
     allow-bean-definition-overriding: true
   kafka:
@@ -8,10 +8,11 @@ spring:
       bootstrap-servers: localhost:9092
       groupId: 12345
       auto-offset-reset: latest
-      enable-auto-commit: false
     producer:
       bootstrap-servers: localhost:9092
       acks: 1
+app:
+  delay: 5
 
 server:
   port: 8080
@@ -26,9 +27,26 @@ spring:
   kafka:
     consumer:
       topics: local
-      properties:
-        max.poll.interval.ms: 100000
-        max.partition.fetch.bytes: 200
-        max.poll.records: 100
     producer:
-      topic: local
+      bootstrap-servers: prod-3-brokers-kafka-bootstrap-event-stream.itzroks-666000ldq2-6xuhwd-4b4a324f027aea19c5cbc0c3275c4656-0000.hkg02.containers.appdomain.cloud:443
+      topic: perf-test
+      acks: 1
+      properties:
+        security.protocol: SASL_SSL
+        sasl.mechanism: SCRAM-SHA-512
+        ssl.protocol: TLSv1.2
+        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
+        ssl.truststore.location: /Users/chansuttichujit/.kafka/truststore.jks
+        ssl.truststore.password: changeme
+        ssl.enabled.protocols: TLSv1.2
+        ssl.endpoint.identification.algorithm: HTTPS
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+    restart:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info,prometheus,metrics,env'
