@@ -2,6 +2,7 @@ package com.example.ktb.kafka;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,8 +14,11 @@ public class PublishController {
         this.sender = sender;
     }
 
-    @GetMapping
-    public void publish() {
-        sender.send("test", new MyMessage("chan", 12));
+    @GetMapping("/{amount}")
+    public void publish(@PathVariable Integer amount) {
+
+        for (int i = 0; i < amount ; i ++) {
+            sender.send("up5", new MyMessage("chan" + i, 12));
+        }
     }
 }

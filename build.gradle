@@ -30,6 +30,11 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-kubernetes
+// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-kubernetes-fabric8-config
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-fabric8-config', version: '2.1.0'
+
+
 }
 
 test {
