@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 configmap: |-
   app:
-    delay: 10
+    delay: 30
   spring:
     jmx:
       enabled: true
@@ -31,7 +31,7 @@ configmap: |-
           security.protocol: SASL_PLAINTEXT
           sasl.mechanism: SCRAM-SHA-512
           linger.ms: 10
-          batch.size: 100000
+          batch.size: 1500000
           buffer.memory: 93554432
           sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
   management:
