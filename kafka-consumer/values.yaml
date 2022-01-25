@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 configmap: |-
   app:
-    delay: 100
+    delay: 10
   spring:
     jmx:
       enabled: true
@@ -14,13 +14,26 @@ configmap: |-
       consumer:
         bootstrap-servers: prod-3-brokers-kafka-bootstrap.event-stream.svc:9092
         topics: perftest
+        client-id: '${pod.name}_${pod.namespace}_${pod.id}'
         properties:
           security.protocol: SASL_PLAINTEXT
           sasl.mechanism: SCRAM-SHA-512
           sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
+          enable.auto.commit: false
+          fetch.min.bytes: 100000
+          fetch.max.bytes: 52428800
+          max.partition.fetch.bytes: 1048576
       producer:
+        acks: 1
         bootstrap-servers: prod-3-brokers-kafka-bootstrap.event-stream.svc:9092
-        topic: test
+        topic: perftest
+        properties:
+          security.protocol: SASL_PLAINTEXT
+          sasl.mechanism: SCRAM-SHA-512
+          linger.ms: 10
+          batch.size: 100000
+          buffer.memory: 93554432
+          sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
   management:
     endpoint:
       health:
@@ -34,13 +47,13 @@ configmap: |-
 
 
 
-replicaCount: 20
+replicaCount: 100
 
 image:
   repository: quay.io/linxianer12/kafka-consumer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 0.0.7
+  tag: 0.0.12
 
 imagePullSecrets:
   - name: quay
@@ -90,6 +103,7 @@ resources:
    limits:
      memory: 768Mi
    requests:
+     cpu: 500m
      memory: 768Mi
 
 autoscaling:

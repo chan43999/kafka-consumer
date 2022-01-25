@@ -23,6 +23,5 @@ public class Consumer {
             "topics}", containerFactory = "kafkaListenerContainerFactory")
     public void listen(@Payload Message message, @Header(KafkaHeaders.OFFSET) List<Long> offsets) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(delay);
-        log.info("perf {}", message);
     }
 }

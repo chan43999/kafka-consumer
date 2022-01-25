@@ -26,20 +26,20 @@ spring:
       on-profile: local
   kafka:
     consumer:
-      topics: local
-    producer:
-      bootstrap-servers: prod-3-brokers-kafka-bootstrap-event-stream.itzroks-666000ldq2-6xuhwd-4b4a324f027aea19c5cbc0c3275c4656-0000.hkg02.containers.appdomain.cloud:443
-      topic: perftest
-      acks: 1
+      bootstrap-servers: localhost:9092
+      topics: perftest
       properties:
-        security.protocol: SASL_SSL
-        sasl.mechanism: SCRAM-SHA-512
-        ssl.protocol: TLSv1.2
-        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
-        ssl.truststore.location: /Users/chansuttichujit/.kafka/truststore.jks
-        ssl.truststore.password: changeme
-        ssl.enabled.protocols: TLSv1.2
-        ssl.endpoint.identification.algorithm: HTTPS
+        enable.auto.commit: false
+        max.poll.records: 50
+        fetch.min.bytes: 16384
+        fetch.max.bytes: 52428800
+        max.partition.fetch.bytes: 1048576
+    producer:
+      acks: 1
+      bootstrap-servers: localhost:9092
+      topic: perftest
+      properties:
+        linger.ms: 5
 management:
   endpoint:
     health:
