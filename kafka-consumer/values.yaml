@@ -20,9 +20,11 @@ configmap: |-
           sasl.mechanism: SCRAM-SHA-512
           sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
           enable.auto.commit: false
-          fetch.min.bytes: 100000
+          fetch.max.wait.ms: 500
+          max.poll.records: 1000
+          fetch.min.bytes: 200000
           fetch.max.bytes: 52428800
-          max.partition.fetch.bytes: 1048576
+          max.partition.fetch.bytes: 50485760
       producer:
         acks: 1
         bootstrap-servers: prod-3-brokers-kafka-bootstrap.event-stream.svc:9092
@@ -31,7 +33,7 @@ configmap: |-
           security.protocol: SASL_PLAINTEXT
           sasl.mechanism: SCRAM-SHA-512
           linger.ms: 10
-          batch.size: 1500000
+          batch.size: 100000
           buffer.memory: 93554432
           sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
   management:
@@ -101,7 +103,7 @@ ingress:
 
 resources:
    limits:
-     cpu: 400m
+     cpu: 1
      memory: 768Mi
    requests:
      cpu: 300m

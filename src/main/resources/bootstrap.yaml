@@ -40,8 +40,8 @@ spring:
         ssl.truststore.password: changeme
         ssl.enabled.protocols: TLSv1.2
         ssl.endpoint.identification.algorithm: HTTPS
-        linger.ms: 10
-        batch.size: 100000
+        linger.ms: 15
+        batch.size: 1000000
         buffer.memory: 93554432
 management:
   endpoint:
