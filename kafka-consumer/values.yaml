@@ -2,6 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 configmap: |-
+  logging:
+    level:
+      root: DEBUG
   app:
     delay: 30
   spring:
@@ -11,25 +14,24 @@ configmap: |-
       activate:
         on-profile: kubernetes
     kafka:
+      listener:
+        concurrency: 5
       consumer:
-        bootstrap-servers: prod-3-brokers-kafka-bootstrap.event-stream.svc:9092
-        topics: perftest
+        bootstrap-servers: kafka-boostrap-2436716-sng01.clb.appdomain.cloud:9093
+        topics: user-info
         client-id: '${pod.name}_${pod.namespace}_${pod.id}'
         properties:
-          security.protocol: SASL_PLAINTEXT
-          sasl.mechanism: SCRAM-SHA-512
-          sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
-          enable.auto.commit: false
+          enable.auto.commit: true
+          fetch.min.bytes: 100000
           fetch.max.wait.ms: 500
-          max.poll.records: 1000
-          fetch.min.bytes: 200000
-          fetch.max.bytes: 52428800
-          max.partition.fetch.bytes: 50485760
+          max.poll.records: 500
+          max.partition.fetch.bytes: 50000000
       producer:
-        acks: 1
+        acks: all
         bootstrap-servers: prod-3-brokers-kafka-bootstrap.event-stream.svc:9092
         topic: perftest
         properties:
+          acks: 1
           security.protocol: SASL_PLAINTEXT
           sasl.mechanism: SCRAM-SHA-512
           linger.ms: 10
@@ -49,13 +51,13 @@ configmap: |-
 
 
 
-replicaCount: 100
+replicaCount: 50
 
 image:
   repository: quay.io/linxianer12/kafka-consumer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 0.0.12
+  tag: 0.0.25
 
 imagePullSecrets:
   - name: quay
