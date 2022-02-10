@@ -12,6 +12,10 @@ repositories {
     mavenCentral()
 }
 
+bootRun{
+    jvmArgs = ["-javaagent:/Users/chansuttichujit/Downloads/jmx_prometheus_javaagent-0.16.1.jar=9404:/Users/chansuttichujit/IdeaProjects/banking/kafka/kafka_metric.yaml"]
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
@@ -34,6 +38,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.6.3'
+    // https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus
+    implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.8.2'
+
 
 
 }

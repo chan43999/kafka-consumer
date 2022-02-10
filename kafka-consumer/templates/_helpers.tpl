@@ -48,6 +48,8 @@ Selector labels
 {{- define "kafka-consumer.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "kafka-consumer.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ .Release.Name }}
+metric: prometheus
 {{- end }}
 
 {{/*

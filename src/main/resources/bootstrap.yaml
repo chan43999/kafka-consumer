@@ -1,4 +1,6 @@
 spring:
+  jmx:
+    enabled: true
   application:
     name: kafka-consumer
   main:
@@ -23,26 +25,13 @@ spring:
       enabled: false
   config:
     activate:
-      on-profile: local
+      on-profile: local-1
   kafka:
     consumer:
       topics: local
     producer:
-      bootstrap-servers: prod-3-brokers-kafka-bootstrap-event-stream.itzroks-666000ldq2-6xuhwd-4b4a324f027aea19c5cbc0c3275c4656-0000.hkg02.containers.appdomain.cloud:443
-      topic: perftest
-      acks: 1
-      properties:
-        security.protocol: SASL_SSL
-        sasl.mechanism: SCRAM-SHA-512
-        ssl.protocol: TLSv1.2
-        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="springboot-kafka" password="L8gGvoe7aotS";
-        ssl.truststore.location: /Users/chansuttichujit/.kafka/truststore.jks
-        ssl.truststore.password: changeme
-        ssl.enabled.protocols: TLSv1.2
-        ssl.endpoint.identification.algorithm: HTTPS
-        linger.ms: 15
-        batch.size: 1000000
-        buffer.memory: 93554432
+      bootstrap-servers: kafka-boostrap-2436716-sng01.clb.appdomain.cloud:9093
+      topic: perf-3-2
 management:
   endpoint:
     health:
@@ -53,3 +42,37 @@ management:
     web:
       exposure:
         include: 'health,info,prometheus,metrics,env'
+---
+spring:
+  cloud:
+    kubernetes:
+      enabled: false
+  config:
+    activate:
+      on-profile: local-3
+  kafka:
+    consumer:
+      bootstrap-servers: kafka-boostrap-2436716-sng01.clb.appdomain.cloud:9093
+      topics: perf-3
+      properties:
+        enable.auto.commit: true
+        fetch.min.bytes: 100000
+        fetch.max.wait.ms: 500
+        max.poll.records: 500
+    producer:
+      bootstrap-servers: kafka-boostrap-2436716-sng01.clb.appdomain.cloud:9093
+      client-id: 1234
+      acks: all
+      topic: perf-3
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+    restart:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: 'health,info,prometheus,metrics,env'
+server:
+  port: 8081

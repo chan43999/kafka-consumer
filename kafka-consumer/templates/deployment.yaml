@@ -54,6 +54,9 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+            - name: jmx
+              containerPort: 9404
+              protocol: TCP
           readinessProbe:
             httpGet:
               path: /actuator/health

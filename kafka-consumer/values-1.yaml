@@ -16,7 +16,7 @@ configmap: |-
         concurrency: 5
       consumer:
         bootstrap-servers: kafka-boostrap-2436716-sng01.clb.appdomain.cloud:9093
-        topics: perf-3
+        topics: perf-1
         client-id: '${pod.name}_${pod.namespace}_${pod.id}'
         properties:
           enable.auto.commit: true
@@ -27,7 +27,7 @@ configmap: |-
       producer:
         acks: all
         bootstrap-servers: kafka-boostrap-2436716-sng01.clb.appdomain.cloud:9093
-        topic: perf-3
+        topic: perf-1
         client-id: '${pod.name}_${pod.namespace}_${pod.id}'
         properties:
           acks: 1
@@ -72,7 +72,7 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 securityContext: {}
   # capabilities:
@@ -80,7 +80,7 @@ securityContext: {}
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+# runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -92,7 +92,7 @@ ingress:
   annotations:
     route.openshift.io/termination: "edge"
   hosts:
-    - host: kafka-consumer.th-client-engineering-f6b6402521be9cea8454becf471bf859-0000.sng01.containers.appdomain.cloud
+    - host: kafka-consumer-1.th-client-engineering-f6b6402521be9cea8454becf471bf859-0000.sng01.containers.appdomain.cloud
       paths:
         - path: /
           pathType: ImplementationSpecific
@@ -100,12 +100,12 @@ ingress:
 
 
 resources:
-   limits:
-     cpu: 2
-     memory: 1.5Gi
-   requests:
-     cpu: 300m
-     memory: 768Mi
+  limits:
+    cpu: 2
+    memory: 1.5Gi
+  requests:
+    cpu: 300m
+    memory: 768Mi
 
 autoscaling:
   enabled: false
